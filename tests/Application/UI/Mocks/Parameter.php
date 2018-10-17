@@ -2,7 +2,7 @@
 
 namespace GrandMediaTests\Application\UI\Mocks;
 
-final class Parameter implements \GrandMedia\Application\UI\Parameter
+final class Parameter
 {
 
 	/**
@@ -14,7 +14,7 @@ final class Parameter implements \GrandMedia\Application\UI\Parameter
 	{
 	}
 
-	public static function fromString(string $string): \GrandMedia\Application\UI\Parameter
+	public static function fromString(string $string): self
 	{
 		$parameter = new self();
 		$parameter->value = $string;

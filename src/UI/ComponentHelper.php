@@ -28,7 +28,7 @@ final class ComponentHelper
 				$annotations = AnnotationsParser::getAll($reflection->getProperty($name));
 				if (isset($annotations['var'])) {
 					$className = Reflection::expandClassName(\end($annotations['var']), $reflection);
-					if (\is_string($params[$name]) && \is_subclass_of($className, Parameter::class)) {
+					if (\is_string($params[$name]) && \is_callable([$className, 'fromString'])) {
 						$params[$name] = \forward_static_call([$className, 'fromString'], $params[$name]);
 					}
 				}
@@ -53,7 +53,7 @@ final class ComponentHelper
 					$name = $parameter->getName();
 					$className = $parameter->getClass()->getName();
 
-					if (\is_string($params[$name]) && \is_subclass_of($className, Parameter::class)) {
+					if (\is_string($params[$name]) && \is_callable([$className, 'fromString'])) {
 						$params[$name] = \forward_static_call([$className, 'fromString'], $params[$name]);
 					}
 				}

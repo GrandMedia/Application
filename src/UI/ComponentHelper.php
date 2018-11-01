@@ -50,9 +50,13 @@ final class ComponentHelper
 		foreach ($methods as $method) {
 			if ($reflection->hasMethod($method)) {
 				foreach ($reflection->getMethod($method)->getParameters() as $parameter) {
-					$name = $parameter->getName();
-					$className = $parameter->getClass()->getName();
+					$class = $parameter->getClass();
+					if ($class === null) {
+						continue;
+					}
 
+					$name = $parameter->getName();
+					$className = $class->getName();
 					if (\is_string($params[$name]) && \is_callable([$className, 'fromString'])) {
 						$params[$name] = \forward_static_call([$className, 'fromString'], $params[$name]);
 					}

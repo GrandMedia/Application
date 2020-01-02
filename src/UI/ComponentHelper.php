@@ -28,8 +28,9 @@ final class ComponentHelper
 				$annotations = AnnotationsParser::getAll($reflection->getProperty($name));
 				if (isset($annotations['var'])) {
 					$className = Reflection::expandClassName(\end($annotations['var']), $reflection);
-					if (\is_string($params[$name]) && \is_callable([$className, 'fromString'])) {
-						$params[$name] = \forward_static_call([$className, 'fromString'], $params[$name]);
+					$fromString = [$className, 'fromString'];
+					if (\is_string($params[$name]) && \is_callable($fromString)) {
+						$params[$name] = $fromString($params[$name]);
 					}
 				}
 			}
@@ -57,8 +58,9 @@ final class ComponentHelper
 
 					$name = $parameter->getName();
 					$className = $class->getName();
-					if (\is_string($params[$name]) && \is_callable([$className, 'fromString'])) {
-						$params[$name] = \forward_static_call([$className, 'fromString'], $params[$name]);
+					$fromString = [$className, 'fromString'];
+					if (\is_string($params[$name]) && \is_callable($fromString)) {
+						$params[$name] = $fromString($params[$name]);
 					}
 				}
 			}
@@ -74,7 +76,7 @@ final class ComponentHelper
 	): string
 	{
 		$reflection = $component::getReflection();
-		$templatesDir = self::joinFilePath(\dirname($reflection->getFileName()), $directory);
+		$templatesDir = self::joinFilePath(\dirname((string) $reflection->getFileName()), $directory);
 
 		if ($component instanceof Presenter) {
 			[, $name] = Helpers::splitName($component->getName());

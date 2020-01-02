@@ -12,18 +12,17 @@ final class Presenter extends \Nette\Application\UI\Presenter
 	public $bar;
 
 	/**
-	 * @var Parameter
+	 * @var \GrandMediaTests\Application\UI\Mocks\Parameter
 	 * @persistent
 	 */
 	public $baz;
 
 	public function actionDefault(Parameter $one, Parameter $two): void
 	{
-
 	}
 
 	public function renderFoo(Parameter $foo): void
 	{
-
 	}
+
 }

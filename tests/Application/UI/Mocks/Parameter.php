@@ -26,4 +26,5 @@ final class Parameter
 	{
 		return $this->value;
 	}
+
 }

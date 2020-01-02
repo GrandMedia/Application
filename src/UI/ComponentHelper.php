@@ -73,7 +73,6 @@ final class ComponentHelper
 		string $extension = 'latte'
 	): string
 	{
-
 		$reflection = $component::getReflection();
 		$templatesDir = self::joinFilePath(\dirname($reflection->getFileName()), $directory);
 
@@ -98,4 +97,5 @@ final class ComponentHelper
 	{
 		return \sprintf('%s/%s', $directory, $file);
 	}
+
 }

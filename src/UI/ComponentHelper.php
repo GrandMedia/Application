@@ -59,7 +59,7 @@ final class ComponentHelper
 					$name = $parameter->getName();
 					$className = $class->getName();
 					$fromString = [$className, 'fromString'];
-					if (\is_string($params[$name]) && \is_callable($fromString)) {
+					if (isset($params[$name]) && \is_string($params[$name]) && \is_callable($fromString)) {
 						$params[$name] = $fromString($params[$name]);
 					}
 				}

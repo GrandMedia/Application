@@ -5,10 +5,7 @@ namespace GrandMediaTests\Application\UI\Mocks;
 final class Parameter
 {
 
-	/**
-	 * @var string
-	 */
-	private $value;
+	private string $value;
 
 	private function __construct()
 	{

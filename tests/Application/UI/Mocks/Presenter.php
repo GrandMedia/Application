@@ -5,17 +5,11 @@ namespace GrandMediaTests\Application\UI\Mocks;
 final class Presenter extends \Nette\Application\UI\Presenter
 {
 
-	/**
-	 * @var \GrandMediaTests\Application\UI\Mocks\Parameter
-	 * @persistent
-	 */
-	public $bar;
+	/** @persistent */
+	public Parameter $bar;
 
-	/**
-	 * @var \GrandMediaTests\Application\UI\Mocks\Parameter
-	 * @persistent
-	 */
-	public $baz;
+	/** @persistent */
+	public Parameter $baz;
 
 	public function actionDefault(Parameter $one, Parameter $two): void
 	{

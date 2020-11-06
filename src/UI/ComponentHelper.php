@@ -5,8 +5,6 @@ namespace GrandMedia\Application\UI;
 use Nette\Application\Helpers;
 use Nette\Application\UI\Component;
 use Nette\Application\UI\Presenter;
-use Nette\Reflection\AnnotationsParser;
-use Nette\Utils\Reflection;
 use Nette\Utils\Strings;
 
 final class ComponentHelper
@@ -24,14 +22,10 @@ final class ComponentHelper
 		$reflection = $component::getReflection();
 
 		foreach ($reflection->getPersistentParams() as $name => $meta) {
-			if (isset($params[$name])) {
-				$annotations = AnnotationsParser::getAll($reflection->getProperty($name));
-				if (isset($annotations['var'])) {
-					$className = Reflection::expandClassName(\end($annotations['var']), $reflection);
-					$fromString = [$className, 'fromString'];
-					if (\is_string($params[$name]) && \is_callable($fromString)) {
-						$params[$name] = $fromString($params[$name]);
-					}
+			if (isset($params[$name]) && \class_exists($meta['type'])) {
+				$fromString = [$meta['type'], 'fromString'];
+				if (\is_string($params[$name]) && \is_callable($fromString)) {
+					$params[$name] = $fromString($params[$name]);
 				}
 			}
 		}
@@ -43,8 +37,9 @@ final class ComponentHelper
 			$methods[] = Presenter::formatRenderMethod($component->view);
 		}
 
-		$signal = $component->getPresenter()->getSignal();
-		if ($signal && $signal[0] === $component->getUniqueId()) {
+		$presenter = $component->getPresenter();
+		$signal = $presenter !== null ? $presenter->getSignal() : null;
+		if (\is_array($signal) && $signal[0] === $component->getUniqueId()) {
 			$methods[] = Component::formatSignalMethod($signal[1]);
 		}
 
@@ -79,7 +74,7 @@ final class ComponentHelper
 		$templatesDir = self::joinFilePath(\dirname((string) $reflection->getFileName()), $directory);
 
 		if ($component instanceof Presenter) {
-			[, $name] = Helpers::splitName($component->getName());
+			[, $name] = Helpers::splitName((string) $component->getName());
 
 			$presenterTemplatesDir = self::joinFilePath($templatesDir, $name);
 			if (\file_exists($presenterTemplatesDir)) {

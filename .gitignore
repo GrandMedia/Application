@@ -1,7 +1,9 @@
 vendor
 composer.lock
 .idea
+.docker
 tests/tmp/*
+docker-compose.yml
 
 !.gitignore
 !.gitkeep

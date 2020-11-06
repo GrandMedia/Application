@@ -16,13 +16,12 @@
 		"sort-packages": true
 	},
 	"require": {
-		"php": ">=7.1",
+		"php": ">=7.4",
 		"nette/application": "^3.0",
-		"nette/reflection": "^2.4",
 		"nette/utils": "^3.0"
 	},
 	"require-dev": {
-		"grand-media/coding-standard": "^2.0",
+		"grand-media/coding-standard": "^3.0",
 		"nette/tester": "^2.0",
 		"phpstan/phpstan": "^0.12"
 	},
